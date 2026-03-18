@@ -1,0 +1,143 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2024 MediaTek Inc.
+ *
+ * Please add dts files into arch/arm64/boot/dts/mediatek/hs07 folder.
+ * To support multi DTBO, Please add  MTK_PROJECT_DTB_NAMES through ProjectConfig.mk in
+ * device/mediateksample/[PROJECT_NAME]/.
+ *
+ * Example )
+ *  MTK_PROJECT_DTB_NAMES =mediatek/hs07
+ */
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/pinctrl/mt6789-pinfunc.h>
+/ {
+	fragment@model {
+	target-path = "/";
+		__overlay__ {
+			dtbo-hw_rev = <0>;
+			dtbo-hw_rev_end = <255>;
+		};
+	};
+};
+
+&chosen {
+
+};
+
+
+/* GPS GPIO standardization start */
+&pio {
+	gps_pins_default: gps_default {
+	};
+	gps_l1_lna_pins_ol: gps_l1_lna@0 {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO25__FUNC_GPIO25>;
+			output-low;
+		};
+	};
+	gps_l1_lna_pins_dsp_ctrl: gps_l1_lna@1 {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO25__FUNC_GPS_L1_ELNA_EN>;
+		};
+	};
+	gps_l1_lna_pins_oh: gps_l1_lna@2 {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO25__FUNC_GPIO25>;
+			output-high;
+		};
+	};
+	gps_l5_lna_pins_ol: gps_l5_lna@0 {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO26__FUNC_GPIO26>;
+			output-low;
+		};
+	};
+	gps_l5_lna_pins_dsp_ctrl: gps_l5_lna@1 {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO26__FUNC_GPS_L5_ELNA_EN>;
+		};
+	};
+	gps_l5_lna_pins_oh: gps_l5_lna@2 {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO26__FUNC_GPIO26>;
+			output-high;
+		};
+	};
+};
+&gps {
+	pinctrl-names = "default",
+		"gps_l1_lna_disable",
+		"gps_l1_lna_dsp_ctrl",
+		"gps_l1_lna_enable",
+		"gps_l5_lna_disable",
+		"gps_l5_lna_dsp_ctrl",
+		"gps_l5_lna_enable";
+	pinctrl-0 = <&gps_pins_default>;
+	pinctrl-1 = <&gps_l1_lna_pins_ol>;
+	pinctrl-2 = <&gps_l1_lna_pins_dsp_ctrl>;
+	pinctrl-3 = <&gps_l1_lna_pins_oh>;
+	pinctrl-4 = <&gps_l5_lna_pins_ol>;
+	pinctrl-5 = <&gps_l5_lna_pins_dsp_ctrl>;
+	pinctrl-6 = <&gps_l5_lna_pins_oh>;
+	status = "okay";
+};
+/* GPS GPIO standardization end */
+
+#include "mediatek/cust_mt6789_camera_v4l2.dtsi"
+
+&sound {
+	mediatek,spk-i2s = <3 0>;
+	mediatek,speaker-codec {
+	};
+};
+
+&scp_audio_mbox {
+	status = "okay";
+};
+
+&pdc {
+	pd_vbus_upper_bound = <12000000>;
+};
+
+/*svp start*/
+&mtee_svp {
+	mtee: MTEE {
+		compatible = "mediatek,mtk_svp_on_mtee_support";
+	};
+
+	svp: SecureVideoPath {
+		compatible = "mediatek,mtk_sec_video_path_support";
+	};
+};
+/*svp end*/
+
+/* SDcard gpio active level */
+&mmc1 {
+	vmmc-supply = <&mt6358_vmch_eint_low>;
+};
+
+/* HS07 code for HS07-5 by hehaoran at 20250225 start */
+&regulator_vibrator {
+	min-volt = <3000000>;
+	max-volt = <3000000>;
+};
+/* HS07 code for HS07-5 by hehaoran at 20250225 end */
+
+/* HS07 code for P250522-08766 by liqian at 20250529 start */
+&mt6358_vsim2_reg {
+	regulator-min-microvolt = <0>;
+};
+/* HS07 code for P250522-08766 by liqian at 20250529 end */
+
+/* HS07 code for P250612-05396 by tangyuhang at 20250704 start */
+&dram_s1 {
+	value = <1>;
+};
+/* HS07 code for P250612-05396 by tangyuhang at 20250704 end */
+#include "mediatek/hs07/hs07_common.dtsi"
+#include "mediatek/hs07/cust.dtsi"
+#include "mediatek/hs07/cust_mt6789_camera_hs07.dtsi"
+/*End of this file, DO NOT ADD ANYTHING HERE*/

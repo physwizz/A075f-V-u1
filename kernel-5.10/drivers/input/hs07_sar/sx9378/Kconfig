@@ -1,0 +1,8 @@
+#
+# Input misc drivers configuration
+#
+config SAR_SX9378
+    tristate "Support for sx9378 sar"
+    help
+      Say Y to enable the SAR detection application, if N here not to use the
+      this SAR sensor

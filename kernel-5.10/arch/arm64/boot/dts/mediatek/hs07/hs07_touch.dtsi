@@ -1,0 +1,159 @@
+&spi0 {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+    mediatek,pad-select = <0>;
+    cs-gpios = <0>, <0>, <0>, <0>;
+
+    /*HS07 code for SR-AL7761A-01-257|SR-AL7761A-01-584 by huangyin at 20250314 start*/
+    himax_ts@0 {
+        compatible = "himax,hxcommon";
+        reg = <0>;
+        spi-max-frequency = <10000000>;
+        spi-cpha;
+        interrupt-parent = <&pio>;
+        // vdd-supply = <&pm8994_l14>;
+        // avdd-supply = <&pm8994_l22>;
+        himax,panel-coords = <0 720 0 1600>;
+        himax,display-coords = <0 720 0 1600>;
+        himax,irq-gpio = <&pio 9 0x00>;
+        himax,rst-gpio = <&pio 155 0x00>;
+        report_type = <1>;
+        status = "okay";
+    };
+
+    chipone_tddi@1 {
+        compatible = "chipone-tddi";
+        reg = <1>;
+        status = "okay";
+        spi-max-frequency = <10000000>;
+        interrupt-parent = <&pio>;
+        interrupts = <9 0x2008>;
+        chipone,rst-gpio = <&pio 155 0x00>;
+        chipone,irq-gpio = <&pio 9 0x00>;
+        //chipone,cs-gpio = <&msm_gpio 8 0>;
+        /*HS07 code for HS07-925 by guyuming at 20250423 start*/
+        chipone,x-res = <719>;
+        chipone,y-res = <1599>;
+        /*HS07 code for HS07-925 by guyuming at 20250423 end*/
+
+        /* Charger detect */
+        chipone,touch-charger-detect-enable;
+        chipone,touch-charger-detect-type = "notify"; /* notify, poll */
+        chipone,touch-charger-detect-psy-name = "charger";
+        chipone,touch-charger-detect-psp = "POWER_SUPPLY_PROP_ONLINE";
+        chipone,touch-charger-detect-psp-poll-interval = <1000>;
+
+        /* Earjack detect */
+        chipone,touch-earjack-detect-enable;
+        /* MTK:  /sys/bus/platform/drivers/Accdet_Driver/state,
+           Sprd: /sys/kernel/headset/state
+           QCOM: None, and disable it */
+        chipone,touch-earjack-state-filepath = "/sys/bus/platform/drivers/Accdet_Driver/state";
+        chipone,touch-earjack-poll-interval = <1000>;
+
+        /*HS07 code for HS07-2286 by guyuming at 20250427 start*/
+        /* For tp selftest */
+        nl9916x_ld_hkc,test-reset-pin;
+        nl9916x_ld_hkc,test-int-pin;
+        nl9916x_ld_hkc,test-rawdata;
+        nl9916x_ld_hkc,test-rawdata-frames      = <1>;
+        nl9916x_ld_hkc,rawdata-min              = <2238>;
+        nl9916x_ld_hkc,rawdata-max              = <5978>;
+        nl9916x_ld_hkc,test-noise;
+        nl9916x_ld_hkc,test-noise-frames        = <50>;
+        nl9916x_ld_hkc,noise-max                = <130>;
+        nl9916x_ld_hkc,test-open;
+        nl9916x_ld_hkc,open-min                 = <1600>;
+        nl9916x_ld_hkc,test-short;
+        nl9916x_ld_hkc,short-min                = <1600>;
+        nl9916x_ld_hkc,test-compensate-cap;
+        nl9916x_ld_hkc,compensate-cap-min       = <1>;
+        nl9916x_ld_hkc,compensate-cap-max       = <127>;
+
+        nl9916x_txd_boe,test-reset-pin;
+        nl9916x_txd_boe,test-int-pin;
+        nl9916x_txd_boe,test-rawdata;
+        nl9916x_txd_boe,test-rawdata-frames      = <1>;
+        nl9916x_txd_boe,rawdata-min              = <2238>;
+        nl9916x_txd_boe,rawdata-max              = <5978>;
+        nl9916x_txd_boe,test-noise;
+        nl9916x_txd_boe,test-noise-frames        = <50>;
+        nl9916x_txd_boe,noise-max                = <130>;
+        nl9916x_txd_boe,test-open;
+        nl9916x_txd_boe,open-min                 = <1600>;
+        nl9916x_txd_boe,test-short;
+        nl9916x_txd_boe,short-min                = <1600>;
+        nl9916x_txd_boe,test-compensate-cap;
+        nl9916x_txd_boe,compensate-cap-min       = <1>;
+        nl9916x_txd_boe,compensate-cap-max       = <127>;
+        /*HS07 code for HS07-2286 by guyuming at 20250427 end*/
+
+        /*HS07 code for HS07-2624 by guyuming at 20250507 start*/
+        nl9916x_xx_tm,test-reset-pin;
+        nl9916x_xx_tm,test-int-pin;
+        nl9916x_xx_tm,test-rawdata;
+        nl9916x_xx_tm,test-rawdata-frames      = <1>;
+        nl9916x_xx_tm,rawdata-min              = <2238>;
+        nl9916x_xx_tm,rawdata-max              = <5978>;
+        nl9916x_xx_tm,test-noise;
+        nl9916x_xx_tm,test-noise-frames        = <50>;
+        nl9916x_xx_tm,noise-max                = <130>;
+        nl9916x_xx_tm,test-open;
+        nl9916x_xx_tm,open-min                 = <1600>;
+        nl9916x_xx_tm,test-short;
+        nl9916x_xx_tm,short-min                = <1600>;
+        nl9916x_xx_tm,test-compensate-cap;
+        nl9916x_xx_tm,compensate-cap-min       = <1>;
+        nl9916x_xx_tm,compensate-cap-max       = <127>;
+        /*HS07 code for HS07-2624 by guyuming at 20250507 end*/
+
+        /*HS07 code for HS07-3335 by guyuming at 20250521 start*/
+        nl9916x_txd_csot,test-reset-pin;
+        nl9916x_txd_csot,test-int-pin;
+        nl9916x_txd_csot,test-rawdata;
+        nl9916x_txd_csot,test-rawdata-frames      = <1>;
+        nl9916x_txd_csot,rawdata-min              = <2238>;
+        nl9916x_txd_csot,rawdata-max              = <5978>;
+        nl9916x_txd_csot,test-noise;
+        nl9916x_txd_csot,test-noise-frames        = <50>;
+        nl9916x_txd_csot,noise-max                = <130>;
+        nl9916x_txd_csot,test-open;
+        nl9916x_txd_csot,open-min                 = <1600>;
+        nl9916x_txd_csot,test-short;
+        nl9916x_txd_csot,short-min                = <1600>;
+        nl9916x_txd_csot,test-compensate-cap;
+        nl9916x_txd_csot,compensate-cap-min       = <1>;
+        nl9916x_txd_csot,compensate-cap-max       = <127>;
+        /*HS07 code for HS07-3335 by guyuming at 20250521 end*/
+
+        /*HS07 code for HS07-3559 by guyuming at 20250529 start*/
+        nl9916x_txd_boe_hh,test-reset-pin;
+        nl9916x_txd_boe_hh,test-int-pin;
+        nl9916x_txd_boe_hh,test-rawdata;
+        nl9916x_txd_boe_hh,test-rawdata-frames      = <1>;
+        nl9916x_txd_boe_hh,rawdata-min              = <2238>;
+        nl9916x_txd_boe_hh,rawdata-max              = <5978>;
+        nl9916x_txd_boe_hh,test-noise;
+        nl9916x_txd_boe_hh,test-noise-frames        = <50>;
+        nl9916x_txd_boe_hh,noise-max                = <130>;
+        nl9916x_txd_boe_hh,test-open;
+        nl9916x_txd_boe_hh,open-min                 = <1600>;
+        nl9916x_txd_boe_hh,test-short;
+        nl9916x_txd_boe_hh,short-min                = <1600>;
+        nl9916x_txd_boe_hh,test-compensate-cap;
+        nl9916x_txd_boe_hh,compensate-cap-min       = <1>;
+        nl9916x_txd_boe_hh,compensate-cap-max       = <127>;
+        /*HS07 code for HS07-3559 by guyuming at 20250529 end*/
+    };
+
+    galaxycore@2 {
+        compatible = "gcore,touchscreen";
+        reg = <2>;
+        status = "okay";
+        spi-max-frequency = <8000000>;
+        gcore,rst-gpio = <&pio 155 0x0>;
+        gcore,irq-gpio = <&pio 9 0x00>;
+    };
+    /* HS07 code for SR-AL7761A-01-257|SR-AL7761A-01-584 by huangyin at 20250313 end */
+};

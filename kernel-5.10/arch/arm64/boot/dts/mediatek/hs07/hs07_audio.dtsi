@@ -1,0 +1,23 @@
+/*stereo dtsi config*/
+&i2c6 {
+/* AWINIC AW87XXX Smart K PA */
+	aw87xxx_pa@58 {
+		compatible = "awinic,aw87xxx_pa";
+		reg = <0x58>;
+		dev_index = < 0 >;
+		status = "okay";
+	};
+/* AWINIC AW87XXX Smart K PA End */
+};
+&soc {
+	analog_pa: analog_pa {
+		compatible = "odm,analog-pa";
+		/* 5:AW87394FCR 4:AW87318AFCR 3:FS1507TN 2:FS1506N 1:FS1512GN 0:FS1512N */
+		/* If PA compatibility is required, set the corresponding bit to 1 */
+		pa-model = < 0x20 >; // (100000)₂
+		/* 0:gpio, 1:i2c */
+		pa-control-type = < 1 >;
+		pa-mum = < 1 >;
+		status = "okay";
+	};
+};

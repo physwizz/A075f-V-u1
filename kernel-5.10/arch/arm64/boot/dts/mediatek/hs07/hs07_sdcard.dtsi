@@ -1,0 +1,51 @@
+#include <dt-bindings/gpio/gpio.h>
+
+&mmc1 {
+    cd-gpios = <&pio 7 GPIO_ACTIVE_HIGH>;
+    vmmc-supply = <&mt6358_vmch_eint_low>;
+};
+/* HS07 code for HS07 by tangyuhang at 20250418 start */
+&mmc1_pins_default {
+    pins_cmd_dat {
+        pinmux = <PINMUX_GPIO73__FUNC_MSDC1_DAT0>,
+            <PINMUX_GPIO74__FUNC_MSDC1_DAT1>,
+            <PINMUX_GPIO75__FUNC_MSDC1_DAT2>,
+            <PINMUX_GPIO76__FUNC_MSDC1_DAT3>,
+            <PINMUX_GPIO72__FUNC_MSDC1_CMD>;
+        input-enable;
+        drive-strength = <7>;
+        bias-pull-up = <MTK_PUPD_SET_R1R0_01>;
+    };
+    pins_clk {
+        pinmux = <PINMUX_GPIO71__FUNC_MSDC1_CLK>;
+        drive-strength = <4>;
+        bias-pull-down = <MTK_PUPD_SET_R1R0_10>;
+    };
+};
+&mmc1_pins_uhs {
+    pins_cmd_dat {
+        pinmux = <PINMUX_GPIO73__FUNC_MSDC1_DAT0>,
+            <PINMUX_GPIO74__FUNC_MSDC1_DAT1>,
+            <PINMUX_GPIO75__FUNC_MSDC1_DAT2>,
+            <PINMUX_GPIO76__FUNC_MSDC1_DAT3>,
+            <PINMUX_GPIO72__FUNC_MSDC1_CMD>;
+        input-enable;
+        drive-strength = <7>;
+        bias-pull-up = <MTK_PUPD_SET_R1R0_01>;
+    };
+    pins_clk {
+        pinmux = <PINMUX_GPIO71__FUNC_MSDC1_CLK>;
+        drive-strength = <4>;
+        bias-pull-down = <MTK_PUPD_SET_R1R0_10>;
+    };
+};
+/* HS07 code for HS07 by tangyuhang at 20250418 end */
+/* HS07 code for HS07 by tangyuhang at 20250402 start */
+&fhctl {
+    map0 {
+        msdcpll {
+            ssc-rate = <6>;
+        };
+    };
+};
+/* HS07 code for HS07 by tangyuhang at 20250402 end */

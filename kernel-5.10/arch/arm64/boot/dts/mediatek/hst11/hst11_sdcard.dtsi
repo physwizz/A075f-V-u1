@@ -1,0 +1,6 @@
+#include <dt-bindings/gpio/gpio.h>
+
+&mmc1 {
+    cd-gpios = <&pio 7 GPIO_ACTIVE_HIGH>;
+    vmmc-supply = <&mt6358_vmch_eint_low>;
+};

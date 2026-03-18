@@ -1,0 +1,78 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2020 MediaTek Inc.
+ */
+
+/* display start */
+/*HST11 code for AX7800A-25 by yubo at 20250410 start*/
+&mtk_leds {
+	compatible = "mediatek,disp-leds";
+
+	/*HST11 code for AX7800A-2752 by yubo at 20250620 start*/
+	backlight {
+		led_mode = <4>;
+		gate_enable = <0>;
+		pwm_config = <0 1 0 0 0>;
+		max-brightness = <510>;
+		max-hw-brightness = <510>;
+		default-state = "hst11";
+	};
+	/*HST11 code for AX7800A-2752 by yubo at 20250620 end*/
+};
+
+&pio {
+	ctp_rst_pin_low: ctp_rst_pin_low {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO155__FUNC_GPIO155>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+	ctp_rst_pin_high: ctp_rst_pin_high {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO155__FUNC_GPIO155>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+};
+
+&dsi0 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	panel1@0 {
+		compatible = "panel,lcm,video";
+		reg = <0>;
+		reset-gpios = <&pio 85 0>;//lcm rst
+		bias-gpios = <&pio 156 0>, <&pio 157 0>;//vsp.vsn
+		pinctrl-names = "ctp_rst_pin_low","ctp_rst_pin_high";
+		pinctrl-0 = <&ctp_rst_pin_low>;
+		pinctrl-1 = <&ctp_rst_pin_high>;
+		port {
+			panel_in1: endpoint {
+				remote-endpoint = <&dsi_out>;
+			};
+		};
+	};
+
+	ports {
+		port {
+			dsi_out: endpoint {
+				remote-endpoint = <&panel_in1>;
+			};
+		};
+	};
+};
+
+/*HST11 code for AX7800A-354 by huangpengyu at 20250421 start*/
+&i2c6 {
+	i2c_lcd_bias_mtk_official:i2c_lcd_bias@3e {
+		compatible = "mediatek,i2c_lcd_bias";
+		reg = <0x3e>;
+		id = <6>;
+		status = "okay";
+	};
+};
+/*HST11 code for AX7800A-25 by yubo at 20250410 end*/
+/*HST11 code for AX7800A-354 by huangpengyu at 20250421 end*/

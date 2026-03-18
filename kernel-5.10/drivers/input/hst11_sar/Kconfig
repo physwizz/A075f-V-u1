@@ -1,0 +1,9 @@
+config INPUT_SAR
+    tristate "Support for sar"
+    help
+      If the platform is supported for sar, this
+      configuration should be configured, and the sar
+      driver configuration should be configured as well.
+
+source "drivers/input/hs07_sar/sx9378/Kconfig"
+source "drivers/input/hs07_sar/hx9031as/Kconfig"

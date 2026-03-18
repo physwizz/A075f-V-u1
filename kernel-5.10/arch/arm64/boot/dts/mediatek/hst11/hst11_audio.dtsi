@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2020 MediaTek Inc.
+ */
+
+/* Audio start */
+/*Tab A11 code for AX7800A-11 by huangzhixian at 20250409 start*/
+/*Tab A11 code for AX7800A-743 by hujincan at 20250513 start*/
+&soc {
+    analog_pa: analog_pa {
+        compatible = "odm,analog-pa";
+        status = "okay";
+        /* 5:AW87394FCR 4:AW87318AFCR 3:FS1507TN 2:FS1506N 1:FS1512GN 0:FS1512N */
+        /* If PA compatibility is required, set the corresponding bit to 1 */
+        pa-model = < 0x08 >; // (001000)₂
+        /* 0:gpio, 1:i2c */
+        pa-control-type = < 0 >;
+        pa-mode = < 4 >;
+        /* If PA compatibility is required, set the compat PA mode */
+        //pa-compat-mode = < 0 >;
+        pa-mum = < 2 >;
+        /* GPIO control pins */
+        ctrl-mod-l-up = <&pio 154 0x0>;
+        ctrl-mod-r-down = <&pio 158 0x0>;
+        ctrl-mod-hac = <&pio 153 0x0>;
+        audio-switch = <&pio 159 0x0>;
+    };
+};
+/*Tab A11 code for AX7800A-743 by hujincan at 20250513 end*/
+/*Tab A11 code for AX7800A-11 by huangzhixian at 20250409 end*/
+/* Audio end */

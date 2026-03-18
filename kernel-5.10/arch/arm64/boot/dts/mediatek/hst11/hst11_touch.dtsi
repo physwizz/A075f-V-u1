@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2020 MediaTek Inc.
+ */
+
+/* TOUCH start */
+/*HST11 code for AX7800A-437 by huangpengyu at 20250428 start*/
+&spi0 {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+    mediatek,pad-select = <0>;
+    cs-gpios = <0>, <0>, <0>, <0>;
+
+    himax_touch@0 {
+        compatible = "himax,hxcommon";
+        reg = <0>;
+        status = "okay";
+        spi-max-frequency = <10000000>;
+        spi-cpha;
+        interrupt-parent = <&pio>;
+        himax,panel-coords = <0 800 0 1340>;
+        himax,display-coords = <0 800 0 1340>;
+        himax,irq-gpio = <&pio 9 0x00>;
+        himax,rst-gpio = <&pio 155 0x00>;
+        report_type = <1>;
+    };
+
+    jadard@1 {
+        compatible = "jadard,jdcommon";
+        reg = <1>;
+        status = "okay";
+        spi-max-frequency = <10000000>;
+        interrupt-parent = <&pio>;
+        interrupts = <9 0x00>;
+        jadard,panel-sense-nums = <22 36>;
+        jadard,panel-coords = <0 800 0 1340>;
+        jadard,int-is-edge = <1>;
+        jadard,panel-max-points = <10>;
+        jadard,irq-gpio = <&pio 9 0x00>;
+        jadard,rst-gpio = <&pio 155 0x00>;
+    };
+};
+/*HST11 code for AX7800A-437 by huangpengyu at 20250428 end*/
+/* TOUCH end */

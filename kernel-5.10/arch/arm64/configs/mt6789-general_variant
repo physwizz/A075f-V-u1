@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+# edit here
+# def/undef for local target
+# *** WARNING: Add enable/disable configs as newline ***
+
+a07_00="""
+CONFIG_UH=y
+CONFIG_RKP=y
+CONFIG_KDP=y
+CONFIG_KDP_TEST=y
+CONFIG_RKP_TEST=y
+"""

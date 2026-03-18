@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Input device configuration
+#
+
+menuconfig INPUT_FINGERPRINT_SUPPORT
+	tristate "Support for fingerprint"
+	help
+	  Say Y here, and a list of supported fingerprint will be displayed.
+	  This option doesn't affect the kernel.
+
+	  If unsure, say Y.
+
+if INPUT_FINGERPRINT_SUPPORT
+
+source "drivers/input/fingerprint/hs07/Kconfig"
+
+endif

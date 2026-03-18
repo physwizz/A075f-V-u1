@@ -1,0 +1,317 @@
+/*HS07 code for SR-AL7761A-01-185|SR-AL7761A-01-518|SR-AL7761A-01-172 by hehaoran at 20250317 start*/
+&spi3 {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    mediatek,pad-select = <0>;
+    cs-gpios = <0>,<0>,<0>,<0>;
+    status = "okay";
+
+    goodix_spi@0 {
+        compatible = "mediatek,goodix-spi-fp";
+        reg = <0>;
+        spi-max-frequency = <8000000>;
+        status = "okay";
+    };
+
+    jiiov_fp@1 {
+        compatible = "jiiov,fingerprint";
+        reg = <1>;
+        spi-max-frequency = <8000000>;
+        anc,vdd_use_gpio;
+        interrupt-parent = <&pio>;
+        anc,gpio_rst = <&pio 63 0x00>;
+        anc,gpio_irq = <&pio 8 0x00>;
+        anc,gpio_pwr = <&pio 64 0x0>;
+        status = "okay";
+        pinctrl-names = "anc_reset_low", "anc_reset_high",
+                    "anc_irq_default","fp_gpio_mode",
+                    "fp_spi_mode";
+        pinctrl-0 = <&anc_reset_low>;
+        pinctrl-1 = <&anc_reset_high>;
+        pinctrl-2 = <&anc_irq_default>;
+        pinctrl-3 = <&fp_gpio_mode>;
+        pinctrl-4 = <&fp_spi_mode>;
+    };
+
+    silead_fp@2 {
+        compatible = "sil,silead_fp";
+        reg = <2>;
+        spi-id = <3>;
+        spi-irq = <138>;
+        spi-reg = <0x1100a000>;
+        spi-max-frequency = <8000000>;
+        avdd-gpio =<&pio 64 0x0>;
+        status = "okay";
+    };
+
+    focaltech_fpspi@3 {
+        compatible = "focaltech,fpspi";
+        reg = <3>;
+        spi-max-frequency = <8000000>;
+        status = "okay";
+    };
+};
+/*HS07 code for SR-AL7761A-01-185|SR-AL7761A-01-518|SR-AL7761A-01-172 by hehaoran at 20250317 end*/
+
+&odm {
+    /*HS07 code for SR-AL7761A-01-172|SR-AL7761A-01-184 by hehaoran at 20250325 start*/
+    goodix_fp {
+        status = "okay";
+        compatible = "mediatek,goodix-platform-fp";
+        interrupt-parent = <&pio>;
+        interrupts = <8 IRQ_TYPE_EDGE_RISING>;
+        gf,irq-gpio = <&pio 8 0>;
+        pinctrl-names = "gf_default","gf_reset_high","gf_reset_low","gf_vdd_high","gf_vdd_low",
+                    "fp_gpio_mode","fp_spi_mode","gf_irq_to_gpio";
+        pinctrl-0 = <&gf_default>;
+        pinctrl-1 = <&gf_reset_high>;
+        pinctrl-2 = <&gf_reset_low>;
+        pinctrl-3 = <&gf_vdd_high>;
+        pinctrl-4 = <&gf_vdd_low>;
+        pinctrl-5 = <&fp_gpio_mode>;
+        pinctrl-6 = <&fp_spi_mode>;
+        pinctrl-7 = <&gf_irq_to_gpio>;
+    };
+    /*HS07 code for SR-AL7761A-01-172|SR-AL7761A-01-184 by hehaoran at 20250325 end*/
+
+    /*HS07 code for SR-AL7761A-01-518 by yuli at 20250315 start*/
+    silead_fp {
+        compatible = "sil,silead_fp-pins";
+        interrupt-parent = <&pio>;
+        interrupts = <8 IRQ_TYPE_EDGE_RISING 8 0>;
+
+        pinctrl-names = "default", "rst-low", "rst-high" ,
+        "irq-init", "fp_spi_mode", "irq_rst-low", "irq_rst-high",
+        "avdd-enable", "avdd-disable","fp_gpio_mode";
+        pinctrl-0 = <&silfp_default>;
+        pinctrl-1 = <&silfp_rst_low>;
+        pinctrl-2 = <&silfp_rst_high>;
+        pinctrl-3 = <&silfp_irq>;
+        pinctrl-4 = <&fp_spi_mode>;
+        pinctrl-5 = <&silfp_irq_rst_low>;
+        pinctrl-6 = <&silfp_irq_rst_high>;
+        pinctrl-7 = <&silead_avdd_enable>;
+        pinctrl-8 = <&silead_avdd_disable>;
+        pinctrl-9 = <&fp_gpio_mode>;
+        status = "okay";
+    };
+    /*HS07 code for SR-AL7761A-01-518 by yuli at 20250315 end*/
+
+    focaltech_fp {
+        compatible = "focaltech,fp";
+        status = "okay";
+        interrupt-parent = <&pio>;
+        interrupts = <8 IRQ_TYPE_EDGE_RISING>;
+
+        focaltech_fp,reset-gpio = <&pio 63 0>;
+        focaltech_fp,irq-gpio = <&pio 8 0>;
+        focaltech_fp,vdd-gpio = <&pio 64 0>;
+        focaltech_fp,ldo-gpio = <&pio 64 0>;
+
+        //focaltech_fp,power-always-on;
+        //focaltech_fp,use-regulator;
+        //ff_vdd-supply = <&mt_pmic_vfp_ldo_reg>;
+
+        //focaltech_fp,ree;
+        //focaltech_fp,no-screen-on-off;
+        focaltech_fp,spiclk;
+
+        focaltech_fp,use-pinctrl;
+        pinctrl-names = "ff_pins_reset_low","ff_pins_reset_high",
+                    "ff_pins_irq_as_int","ff_pins_power_low",
+                    "ff_pins_power_high","fp_gpio_mode",
+                    "fp_spi_mode";
+        pinctrl-0 = <&fp_pins_rst_output0>;
+        pinctrl-1 = <&fp_pins_rst_output1>;
+        pinctrl-2 = <&fp_pins_eint>;
+        pinctrl-3 = <&fp_pins_power_output0>;
+        pinctrl-4 = <&fp_pins_power_output1>;
+        pinctrl-5 = <&fp_gpio_mode>;
+        pinctrl-6 = <&fp_spi_mode>;
+    };
+};
+
+&pio {
+    fp_spi_mode: fp_spi_mode {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO45__FUNC_SPI3_MI>,
+            <PINMUX_GPIO44__FUNC_SPI3_MO>,
+            <PINMUX_GPIO43__FUNC_SPI3_CSB>,
+            <PINMUX_GPIO42__FUNC_SPI3_CLK>;
+        };
+    };
+    fp_gpio_mode: fp_gpio_mode {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO45__FUNC_GPIO45>,
+            <PINMUX_GPIO44__FUNC_GPIO44>,
+            <PINMUX_GPIO43__FUNC_GPIO43>,
+            <PINMUX_GPIO42__FUNC_GPIO42>;
+        };
+    };
+};
+
+/*HS07 code for SR-AL7761A-01-172|SR-AL7761A-01-184 by hehaoran at 20250325 start*/
+&pio {
+    gf_default: gf_default {
+    };
+    gf_reset_high: gf_reset_high {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            slew-rate = <1>;
+            output-high;
+        };
+    };
+    gf_reset_low: gf_reset_low {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+    gf_vdd_high: gf_vdd_high {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO64__FUNC_GPIO64>;
+            slew-rate = <1>;
+            output-high;
+        };
+    };
+    gf_vdd_low: gf_vdd_low {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO64__FUNC_GPIO64>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+    gf_irq_to_gpio: gf_irq_to_gpio {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO8__FUNC_GPIO8>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+};
+/*HS07 code for SR-AL7761A-01-172|SR-AL7761A-01-184 by hehaoran at 20250325 end*/
+
+/*HS07 code for SR-AL7761A-01-185 by hehaoran at 20250311 start*/
+&pio {
+    anc_reset_low: anc_reset_low {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+    anc_reset_high: anc_reset_high {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            slew-rate = <1>;
+            output-high;
+        };
+    };
+    anc_irq_default: anc_irq_default {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO8__FUNC_GPIO8>;
+            slew-rate = <0>;
+            bias-pull-down;
+            input-enable;
+        };
+    };
+};
+/*HS07 code for SR-AL7761A-01-185 by hehaoran at 20250311 end*/
+
+/*HS07 code for SR-AL7761A-01-518 by yuli at 20250315 start*/
+&pio {
+    silfp_default: silfpdefault {
+    };
+
+    silfp_rst_high: state_reset_high {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            slew-rate = <1>;
+            output-high;
+        };
+    };
+
+    silfp_rst_low: state_reset_low {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+
+    silfp_irq_rst_high: state_irq_to_reset_high {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO8__FUNC_GPIO8>;
+            slew-rate = <1>;
+            output-high;
+        };
+    };
+
+    silfp_irq_rst_low: state_irq_to_reset_low {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO8__FUNC_GPIO8>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+
+    silfp_irq: fp_eint@8 {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO8__FUNC_GPIO8>;
+            slew-rate = <0>;
+            output-low;
+        };
+    };
+
+    silead_avdd_enable: silead_avdd_enable {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO64__FUNC_GPIO64>;
+            slew-rate = <1>;
+            output-high;
+        };
+    };
+
+    silead_avdd_disable: silead_avdd_disable {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO64__FUNC_GPIO64>;
+            slew-rate = <1>;
+            output-low;
+        };
+    };
+};
+/*HS07 code for SR-AL7761A-01-518 by yuli at 20250315 end*/
+
+&pio {
+    fp_pins_rst_output0: fprstout0 {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            output-low;
+        };
+    };
+    fp_pins_rst_output1: fprstout1 {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO63__FUNC_GPIO63>;
+            output-high;
+        };
+    };
+    fp_pins_eint: fpeint {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO8__FUNC_GPIO8>;
+            bias-disable;
+            input-enable;
+        };
+    };
+    fp_pins_power_output0: fppwrout0 {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO64__FUNC_GPIO64>;
+            output-low;
+        };
+    };
+    fp_pins_power_output1: fppwrout1 {
+        pins_cmd_dat {
+            pinmux = <PINMUX_GPIO64__FUNC_GPIO64>;
+            output-high;
+        };
+    };
+};

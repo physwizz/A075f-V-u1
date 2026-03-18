@@ -1,0 +1,6 @@
+&odm {
+	sdcard_det: sdcard-det-pin {
+		compatible = "mediatek,sdcard-detect-pin";
+		mediatek,sdcard-detect-pin-no = <&pio 7 0>;
+	};
+};

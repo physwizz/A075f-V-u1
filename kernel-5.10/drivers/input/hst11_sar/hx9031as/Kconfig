@@ -1,0 +1,8 @@
+#
+# Input misc drivers configuration
+#
+config SAR_HX9031
+    tristate "Support for hx9031 sar"
+    help
+      Say Y to enable the SAR hx9031as detection application, if N here not to use the
+      this SAR sensor

@@ -1,0 +1,42 @@
+/* HST11 code for AX7800A-6 by wangletian at 20250403 start */
+#include <dt-bindings/clock/mt6789-clk.h>
+// k250a power control
+&odm {
+    k250a-dev {
+        status = "ok";
+        compatible = "sec,k250a";
+        // pmic ldo_vio18 power supply
+        // ldo_vio18-supply = <&mt6358_vio18_reg>;
+        // SECURITY_IC_POWER_SUPPLY_VIA_GPIO-gpio control power supply
+        sec,gpio_power = <&pio 36 0>;
+        // SECURITY_IC_ENABLE_I2C_VIA_I2C_CLK-I2C communicate
+        clocks = <&imp_iic_wrap_c_clk CLK_IMPC_AP_CLOCK_I2C5>,
+            <&infracfg_ao_clk CLK_IFRAO_AP_DMA>;
+        clock-names = "k250a-clk-main", "k250a-clk-dma";
+    };
+};
+
+&i2c5 {
+/* HST11 code for AX7800A-6 by wangletian at 20250424 start */
+    status = "disabled";
+    // status = "ok";
+/* HST11 code for AX7800A-6 by wangletian at 20250424 end */
+    #address-cells = <1>;
+    #size-cells = <0>;
+    // clock-frequency = <400000>;
+    // mediatek,use-open-drain;
+
+/* HST11 code for AX7800A-6 by wangletian at 20250424 start */
+/*
+    // read-0x47, write-0x46
+    k250a@23 {
+        status = "ok";
+        compatible = "sec_k250a";
+        reg = <0x23>;
+        // 1p8_pvdd-supply = <&ldo11>;
+        reset_gpio = <&pio 36 0>;
+    };
+*/
+/* HST11 code for AX7800A-6 by wangletian at 20250424 end */
+};
+/* HST11 code for AX7800A-6 by wangletian at 20250403 end */

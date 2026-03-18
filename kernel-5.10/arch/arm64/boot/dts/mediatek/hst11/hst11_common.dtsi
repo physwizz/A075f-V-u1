@@ -1,0 +1,28 @@
+/*Tab A9 code for AX6739A-9 by xiongxiaoliang at 20230420 start*/
+#include "hst11_touch.dtsi"
+/*Tab A9 code for SR-AX6739A-01-282 by wenghailong at 20230502 start*/
+#include "hst11_display.dtsi"
+/*Tab A9 code for SR-AX6739A-01-282 by wenghailong at 20230502 end*/
+/*Tab A9 code for AX6739A-9 by xiongxiaoliang at 20230420 end*/
+/*Tab A9 code for AX6739A-12 by wenyaqi at 20230421 start*/
+#include "hst11_charger.dtsi"
+/*Tab A9 code for AX6739A-12 by wenyaqi at 20230421 end*/
+/*Tab A9 code for SR-AX6739A-01-184 by hujincan at 20230424 start*/
+#include "hst11_audio.dtsi"
+/*Tab A9 code for SR-AX6739A-01-184 by hujincan at 20230424 end*/
+/*Tab A9 code for AX6739A-30 by qiaodan at 20230502 start*/
+#include "hst11_board_id.dtsi"
+/*Tab A9 code for  AX6739A-30 by qiaodan at 20230502 end*/
+/*Tab A9 code for SR-AX6739A-01-314 by xiongxiaoliang at 20230502 start*/
+#include "hst11_sar.dtsi"
+/*Tab A9 code for SR-AX6739A-01-314 by xiongxiaoliang at 20230502 end*/
+/*Tab A9 code for SR-AX6739A-01-494 by qiaodan at 20230502 start*/
+#include "hst11_usb.dtsi"
+/*Tab A9 code for SR-AX6739A-01-494 by qiaodan at 20230502 end*/
+/*HST11 code for AX7800A-207 by Litianyi at 20250416 start*/
+#include "hst11_sdcard_tray.dtsi"
+#include "hst11_sdcard.dtsi"
+/*HST11 code for AX7800A-207 by Litianyi at 20250416 end*/
+/*HST11 code for AX7800A-6 by wangletian at 20250401 start */
+#include "hst11_KnoxVault2.dtsi"
+/*HST11 code for AX7800A-6 by wangletian at 20250401 end */

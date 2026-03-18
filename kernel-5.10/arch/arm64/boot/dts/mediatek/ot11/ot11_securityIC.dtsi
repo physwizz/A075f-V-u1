@@ -1,0 +1,36 @@
+/* HST11 code for AX7800A-6 by wangletian at 20250429 start */
+#include <dt-bindings/clock/mt6789-clk.h>
+/* Tab A9 code for SR-AX6739A-01-392 by gaochao at 20230505 start */
+&soc {
+    grdm-dev {
+        status = "okay";
+        compatible = "sec,guardianm";
+        // pmic ldo_vio18 power supply
+        ldo_vio18-supply = <&mt6358_vio18_reg>;
+        // SECURITY_IC_POWER_SUPPLY_VIA_GPIO-gpio control power supply
+        sec,gpio_power = <&pio 36 0>;
+        // SECURITY_IC_ENABLE_SPI_VIA_SPI_CLK-SPI communicate
+        clocks = <&infracfg_ao_clk CLK_IFRAO_SPI3>;
+        clock-names = "grdm-clk";
+        /* Tab A9 code for SR-AX6739A-01-393 by gaochao at 20230607 start */
+        stage_gpio_BOARD_ID5 = <&pio 17 0>;
+        stage_gpio_BOARD_ID4 = <&pio 15 0>;
+        stage_gpio_BOARD_ID3 = <&pio 150 0>;
+        /* Tab A9 code for SR-AX6739A-01-393 by gaochao at 20230607 end */
+    };
+};
+/* Tab A9 code for SR-AX6739A-01-392 by gaochao at 20230505 end */
+/* HST11 code for AX7800A-6 by wangletian at 20250429 end */
+/* Tab A9 code for SR-AX6739A-01-393 by gaochao at 20230625 start */
+/*
+&spi3 {
+    status = "okay";
+    grdm-spi@3 {
+        status = "okay";
+        compatible = "sec,grdm-spi";
+        reg = <0x0>;
+        spi-max-frequency = <10000000>;
+    };
+};
+*/
+/* Tab A9 code for SR-AX6739A-01-393 by gaochao at 20230625 end */

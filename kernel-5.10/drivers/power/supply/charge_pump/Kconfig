@@ -1,0 +1,37 @@
+# HS07 code for HS07-12 by yexuedong at 20250221 start
+config CHARGER_CP_PPS
+	tristate "charge pump pps support"
+	default n
+	help
+	  Say Y to enable support for charge pump pps
+config NX853X_CP
+	tristate "NX853X CP"
+	depends on MTK_CHARGER
+	help
+	  Say Yes to enable
+	  NX853X driver.
+# HS07 code for HS07-12 by yexuedong at 20250221 end
+# HS07 code for SR-AL7761A-01-167 by yexuedong at 20250307 start
+config SP2131_CP
+	tristate "SP2131 CP"
+	depends on MTK_CHARGER
+	help
+	  Say Yes to enable
+	  SP2131 driver.
+# HS07 code for SR-AL7761A-01-167 by yexuedong at 20250307 end
+# HS07 code for HS07-215 by huofudong at 20250326 start
+config UPM6726_CP
+	tristate "UPM6726 CP"
+	depends on MTK_CHARGER
+	help
+	  Say Yes to enable
+	  UPM6726 driver.
+# HS07 code for HS07-215 by huofudong at 20250326 end
+# HS07 code for HS07-2963 by yexuedong at 20250515 start
+config SGM41608_CP
+	tristate "SGM41608 CP"
+	depends on MTK_CHARGER
+	help
+	  Say Yes to enable
+	  SGM41608 driver.
+# HS07 code for HS07-2963 by yexuedong at 20250515 end

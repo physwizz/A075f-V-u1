@@ -1,0 +1,271 @@
+/* HST11 code for AX7800A-28 by zhangziyi at 20250408 start */
+#include <dt-bindings/iio/mt635x-auxadc.h>
+#include "mediatek/bat_setting/mt6789_battery_prop_hst11.dtsi"
+
+&thermal_zones {
+    usb_therm: usb_therm {
+        polling-delay = <0>; /* milliseconds */
+        polling-delay-passive = <0>; /* milliseconds */
+        thermal-sensors = <&tboard_thermistor3>;
+    };
+};
+
+&odm {
+    gxy_psy: gxy_psy {
+        compatible = "gxy, gxy_psy";
+        status = "okay";
+
+        gxy_battery_ttf: gxy_battery_ttf {
+            status = "okay";
+            battery,ttf_dcp_charge_current = <1500>;
+            battery,ttf_hv_charge_current = <2655>;
+            battery,ttf_pd25_charge_current = <2655>;
+            battery,ttf_pd45_charge_current = <2655>;
+            battery,ttf_capacity = <4980>;
+            /*fg_current soc cv_time*/
+            /* HST11 code for AX7800A-938 by wenyaqi at 20250526 start */
+            battery,cv_data = <
+                2601  82  2562
+                2535  85  2331
+                2339  87  2171
+                2108  89  1990
+                1862  91  1780
+                1620  93  1539
+                1354  95  1243
+                1092  97  877
+                965  98  657
+                812   99  366
+                663   100  0
+            >;
+            /* HST11 code for AX7800A-938 by wenyaqi at 20250526 end */
+        };
+    };
+
+    bat_id_adc: bat_id_adc {
+        compatible = "gxy, bat_id_adc";
+        io-channels = <&auxadc 4>;
+        io-channel-names = "gxy-battid";
+        /* HST11 code for AX7800A-616 by wenyaqi at 20250425 start */
+        support_auth_ic;
+        /* HST11 code for AX7800A-616 by wenyaqi at 20250425 end */
+    };
+
+    vbus_ctrl: vbus_ctrl {
+        compatible = "gxy, vbus_ctrl";
+        vbus_ctrl_gpio_num = <50>;
+        vbus_ctrl_gpio = <&pio 50 0x0>;
+        io-channels = <&auxadc 2>;
+        io-channel-names = "gxy-usb-therm";
+    };
+
+    /* AFC  Fast charging */
+    afc_charger: afc_charger {
+        compatible = "gxy,afc_charger";
+        gauge = <&mtk_gauge>;
+        status = "okay";
+        afc_switch_gpio_num = <1>;
+        afc_switch_gpio = <&pio 1 0x0>;
+        afc_data_gpio_num = <5>;
+        afc_data_gpio = <&pio 5 0x0>;
+        afc_start_battery_soc = <0>;
+        afc_stop_battery_soc = <100>;
+        afc_pre_input_current = <500000>;
+        afc_charger_input_current = <1700000>;
+        afc_charger_current = <2700000>;
+        afc_min_charger_voltage = <4600000>;
+        vbat_threshold = <4400>;
+    };
+
+    /* HST11 code for AX7800A-632 by wenyaqi at 20250507 start */
+    sec-auth-sle956681 {
+        status = "okay";
+        compatible = "samsung,sec_auth_sle956681";
+        authon,power_mode = "indirect";
+        authon,1tau_value = <120>;
+        authon,3tau_value = <360>;
+        authon,5tau_value = <600>;
+        authon,response_timeout_value = <4500>;
+        authon,swi_gpio = <&pio 11 0x0>;
+        authon,eur_detection = <0x02 0x00 0x00>;
+    };
+    /* HST11 code for AX7800A-632 by wenyaqi at 20250507 end */
+
+    gxy_alarm: gxy_alarm {
+        compatible = "gxy, gxy_alarm";
+        status = "okay";
+    };
+};
+
+&lk_charger {
+    max_charger_voltage = <10400000>;
+    ac_charger_current = <2000000>;
+    ac_charger_input_current = <1550000>;
+
+    /* HST11 code for AX7800A-502 by zhangziyi at 20250422 start */
+    /* battery temperature protection */
+    temp_t4_threshold = <57>;
+    temp_t3_threshold = <42>;
+    temp_t2_threshold = <23>;
+    temp_t1_threshold = <13>;
+    temp_t0_threshold = <0>;
+    /* HST11 code for AX7800A-502 by zhangziyi at 20250422 end */
+    /* HST11 code for AX7800A-787 by wenyaqi at 20250519 start */
+    temp_t0_t1_charger_current = <420000>;
+    temp_t1_t2_charger_current = <1320000>;
+    enable_custom_jeita;
+    /* HST11 code for AX7800A-787 by wenyaqi at 20250519 end */
+};
+
+&charger {
+    io-channels = <&pmic_auxadc AUXADC_VCDT>;
+    io-channel-names = "pmic_vbus";
+    /* common */
+    battery_cv = <4380000>;
+    max_charger_voltage = <6400000>;
+    max_fast_charger_voltage = <10400000>;
+    min_charger_voltage = <4600000>;
+
+    /* sw jeita */
+    enable_sw_jeita;
+    jeita_temp_above_t4_cv = <4100000>;
+    jeita_temp_t3_to_t4_cv = <4100000>;
+    jeita_temp_t2_to_t3_cv = <4380000>;
+    jeita_temp_t1_to_t2_cv = <4380000>;
+    jeita_temp_t0_to_t1_cv = <4380000>;
+    jeita_temp_below_t0_cv = <4380000>;
+
+    /* HST11 code for AX7800A-502 by zhangziyi at 20250422 start */
+    jeita_temp_above_t4_cur = <0>;
+    jeita_temp_t3_to_t4_cur = <1560000>;
+    jeita_temp_t2_to_t3_cur = <2700000>;
+    jeita_temp_t1_to_t2_cur = <1320000>;
+    jeita_temp_t0_to_t1_cur = <420000>;
+    jeita_temp_below_t0_cur = <0>;
+    temp_t4_thres = <57>;
+    temp_t4_thres_minus_x_degree = <56>;
+    temp_t3_thres = <42>;
+    temp_t3_thres_minus_x_degree = <41>;
+    temp_t2_thres = <23>;
+    temp_t2_thres_plus_x_degree = <24>;
+    temp_t1_thres = <13>;
+    temp_t1_thres_plus_x_degree = <14>;
+    temp_t0_thres = <0>;
+    temp_t0_thres_plus_x_degree = <2>;
+    temp_neg_10_thres = <0>;
+
+    /* HST11 code for AX7800A-494 by wenyaqi at 20250424 start */
+    /* sw thermal */
+    enable_custom_thermal_buck;
+    thermal_lcd_on_buck_cur = <2300000 1500000>;
+    thermal_lcd_off_buck_cur = <2300000 1500000>;
+    /* HST11 code for AX7800A-494 by wenyaqi at 20250424 end */
+
+    /* battery temperature protection */
+    enable_min_charge_temp;
+    min_charge_temp = <0>;
+    min_charge_temp_plus_x_degree = <6>;
+    max_charge_temp = <50>;
+    max_charge_temp_minus_x_degree = <47>;
+    /* HST11 code for AX7800A-502 by zhangziyi at 20250422 end */
+
+    disable_aicl;
+    /* charging current */
+    usb_charger_current = <500000>;
+    ac_charger_current = <2000000>;
+    ac_charger_input_current = <1550000>;
+    charging_host_charger_current = <1500000>;
+
+    /* dynamic mivr */
+    enable_dynamic_mivr;
+    min_charger_voltage_1 = <4500000>;
+    min_charger_voltage_2 = <4300000>;
+    max_dmivr_charger_current = <1800000>;
+
+    /* fast charging algo support indicator */
+    enable_fast_charging_indicator;
+
+    /* Battery Life */
+    gxy-batt-aging-enable;
+    gxy,cv-ranges = <0 199 4380000
+                    200 249 4360000
+                    250 299 4340000
+                    300 1000 4320000
+                    1001 9999 4270000>;
+
+    /* HST11 code for AX7800A-632 by wenyaqi at 20250512 start */
+    /* Auth Battery */
+    support_auth_ic;
+    auth_battery_cv = <4480000>;
+    auth_jeita_temp_t2_to_t3_cv = <4480000>;
+    auth_jeita_temp_t1_to_t2_cv = <4480000>;
+    auth_jeita_temp_t0_to_t1_cv = <4480000>;
+    auth_jeita_temp_below_t0_cv = <4480000>;
+    auth_gxy,cv-ranges = <0 199 4480000
+                    200 249 4460000
+                    250 299 4440000
+                    300 1000 4420000
+                    1001 9999 4370000>;
+    /* HST11 code for AX7800A-632 by wenyaqi at 20250512 end */
+};
+
+&pdc {
+    pd_vbus_upper_bound = <10000000>;
+    pd_stop_battery_soc = <100>;
+    /* single charger */
+    sc_input_current = <1700000>;
+    sc_charger_current = <2700000>;
+    /* dual charger */
+    vbat_threshold = <4400>;
+};
+
+&i2c3 {
+    upm6922-charger {
+        compatible = "up,upm6922_charger";
+        status = "okay";
+        reg = <0x6b>;
+        up,intr_gpio = <&pio 4 0>;
+
+        up,upm6922,ichg = <500>;              /* unit:1mA */
+        up,upm6922,iprechg = <420>;            /* unit:1mA */
+        up,upm6922,iterm = <240>;              /* unit:1mA */
+        up,upm6922,vreg = <4400>;              /* unit:1mV */
+        up,upm6922,vindpm = <4600>;            /* unit:1mV */
+        up,upm6922,boostv = <5000>;            /* unit:1mV */
+        up,upm6922,boosti = <1200>;            /* unit:1mA */
+        up,upm6922,vac-ovp = <11000>;          /* unit:1mV */
+        //up,upm6922,continuous-adc-enable;
+    };
+
+    scv89601p_charger: scv89601p@6C {
+        compatible = "sc,scv89601p";
+        reg = <0x6C>;
+        status = "okay";
+        scv89601p,intr-gpio = <&pio 4 0>;
+        scv89601p,charger_name = "primary_chg";
+        scv89601p,pfm-dis = <0>; /*0: enable, 1: disable*/
+        scv89601p,vsys-min = <5>; /*0: 2.6V, 1: 2.8V, 2: 3.0V, 
+                    3: 3.2V, 4: 3.4V, 5: 3.5V, 6:3.6V, 7: 3.7V*/
+        scv89601p,vbat-low-otg = <1>; /*0: 2.6V, 1: 2.8V*/
+        scv89601p,ipre-chg = <2>; /*60 + val * 60, unit:mA*/
+        scv89601p,itrickle = <0>; /*0: 50mA, 1: 100mA*/
+        /* HST11 code for AX7800A-625 by zhangziyi at 20250429 start */
+        scv89601p,itermination = <3>; /*60 + val * 60, unit:mA*/
+        /* HST11 code for AX7800A-625 by zhangziyi at 20250429 end */
+        scv89601p,vbat-volt = <67>; /*3530 + val * 10, unit:mV*/
+        scv89601p,vrechg-volt = <0>; /*0:100mV, 1:200mV, 2:300mA 3:400mA*/
+        scv89601p,en-termination = <1>; /*0: disable, 1: enable*/
+        scv89601p,hvdcp-en = <0>; /*0: disable, 1: enable*/
+        scv89601p,wdt-timer = <0>; /*0: disable, 1: 40s, 2: 80s, 3：160s*/
+        scv89601p,en-safety-timer = <1>; /*0: disable, 1: enable*/
+        scv89601p,charge-timer = <3>; /*0: 5hrs, 1: 8hrs, 2: 12hrs, 3: 24hrs*/
+        scv89601p,vac-ovp = <3>; /*0: 6V, 1: 11V, 2: 12V, 3: 14V*/
+        scv89601p,iboost = <2>; /*0:500mA, 1:0.9A, 2:1.3A, 3:1.5 4:2.1A, 5:2.5A, 6:2.9A, 7:3A*/
+        scv89601p,vboost = <5100>; /*unit:mV*/
+        scv89601p,vindpm-track = <0>; /*0: disable, 1:200mV, 2:250mV, 3:300mV*/
+        scv89601p,vindpm-int-mask = <1>; /*0: not mask, 1: mask*/
+        scv89601p,iindpm-int-mask = <1>; /*0: not mask, 1: mask*/
+        scv89601p,auto-dpdm-en = <0>; /*0: disale, 1: enable*/
+        scv89601p,iindpm-update-dis = <1>; /*0: enable 1:disable*/
+    };
+};
+/* HST11 code for AX7800A-28 by zhangziyi at 20250408 end */

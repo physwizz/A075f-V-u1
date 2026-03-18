@@ -1,0 +1,22 @@
+#include "hs07_display.dtsi"
+#include "hs07_touch.dtsi"
+/*HS07 code for HS07-10 by xiongxiaoliang at 20250221 start*/
+#include "hs07-charger.dtsi"
+#include "hs07-usb.dtsi"
+/*HS07 code for HS07-10 by xiongxiaoliang at 20250221 end*/
+/* HS07 code for HS07-26 by gaochao at 20250226 start */
+#include "hs07_sdcard.dtsi"
+#include "hs07_sdcard_tray.dtsi"
+/* HS07 code for HS07-26 by gaochao at 20250226 end */
+/* HS07 code for HS07-32 by wangletian at 20250226 start */
+#include "hs07_KnoxVault2.dtsi"
+/* HS07 code for HS07-32 by wangletian at 20250226 end */
+/*HS07 code for HS07-9 by huofudong at 20250221 start*/
+#include "hs07_sar.dtsi"
+/*HS07 code for HS07-9 by huofudong at 20250221 end*/
+/*HS07 code for HS07-28 by hujincan at 20250225 start*/
+#include "hs07_audio.dtsi"
+/*HS07 code for HS07-28 by hujincan at 20250225 end*/
+/*HS07 code for HS07-5 by hehaoran at 20250221 start*/
+#include "hs07_fingerprint.dtsi"
+/*HS07 code for HS07-5 by hehaoran at 20250221 end*/
